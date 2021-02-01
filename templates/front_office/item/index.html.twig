@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nos items
+{% endblock %}
+
+{% block body %}
+	{% if app.request.attributes.get('_route') == 'item_index' %}
+		<div class="row">
+			{% for item in items %}
+				<div class="col-md-6">
+					<div class="card mb-3" style="max-width: 540px;">
+						<div class="row no-gutters">
+							<div class="col-md-4">
+								{% for media in item.medias %}
+									<a href="{{ path("item_show", {slug: item.slug, id: item.id}) }}">
+										<img src="{{ asset(media.path) }}" class="card-img" alt="...">
+									</a>
+								{% endfor %}
+							</div>
+							<div class="col-md-8">
+								<div class="card-body">
+									<h5 class="card-title">{{ item.name}}
+										|
+										{{ item.price }}
+										Ar</h5>
+									<p class="card-text">{{ item.description | raw }}</p>
+									<p class="card-text">
+										<a href="{{ path("item_show", {slug: item.slug, id: item.id}) }}" class="btn btn-primary">
+											<i class="fas fa-plus"></i>
+											Details</a>
+										{% if is_granted("ROLE_USER") %}
+											<a href="{{ path("cart_add", {'id': item.id}) }}?returnToCart=true" add-to-cart data-toggle="modal" data-target="#modalCart" id="add" class="btn btn-dark">
+												<i class="fas fa-shopping-cart"></i>
+												Ajouter</a>
+										{% endif %}
+									</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+	{% endif %}
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Page d'accueil !
+{% endblock %}
+
+{% block body %}
+	<div>
+		<h4 class="text-center mb-4">Menus</h4>
+		<div class="text-center row">
+			{% for item in items %}	
+				<div class="col-md-3 mb-4">
+					<div class="card-group">
+						<div class="card">
+							{% for media in item.medias %}
+								<img src="{{ asset(media.path) }}" class="card-img-top">
+                            {% endfor %}
+							<div class="card-body">
+								<h5 class="card-title">{{ item.name }}</h5>
+								<p class="card-text">{{ item.description | raw }}</p>
+							</div>
+							<div class="card-footer">
+								<b class="text-muted">{{ item.price }} Ar</b>
+							</div>
+						</div>
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+	</div>
+{% endblock %}

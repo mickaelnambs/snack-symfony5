@@ -1,0 +1,58 @@
+{% extends "base.html.twig" %}
+{% block title %}Details
+{% endblock %}
+{% block body %}
+	<div class="jumbotron bg-white">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-6">
+					{% for media in item.medias %}
+						<img src="{{ asset(media.path) }}" alt="image" style="width: 400px; height: 400px;">
+					{% endfor %}
+				</div>
+				<div class="col-md-6">
+					<h1 class="text-secondary">{{item.category.title}}
+						{{ item.name }}</h1>
+					<div class="text-secondary" style="font-size: 2rem; font-weight: bold;">{{ item.price | number_format(0, '', ' ') }}Ar</div>
+					{% if is_granted("ROLE_USER") %}
+						<a href="{{ path("cart_add", {'id': item.id}) }}?returnToCart=true" add-to-cart class="btn btn-dark">
+							<i class="fas fa-shopping-cart"></i>
+							Ajouter</a>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="container mt-4">
+		<p>
+			{{ item.description | nl2br }}
+		</p>
+		<div class="row">
+			<div class="col-md-8">
+				<h2>Description</h2>
+				<table class="table table-striped">
+					<tr>
+						<td>
+							<b>Nom</b>
+						</td>
+						<td>{{item.name }}</td>
+					</tr>
+					<tr>
+						<td>
+							<b>Prix</b>
+						</td>
+						<td>{{ item.price | number_format(0, '', ' ') }}
+							Ar</td>
+					</tr>
+					<tr>
+						<td>
+							<b>Categorie</b>
+						</td>
+						<td>{{ item.category.title }}
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+{% endblock %}

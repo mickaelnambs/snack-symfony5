@@ -1,0 +1,14 @@
+{{ form_start(form) }}
+<div class="card">
+	<div class="card-header">{{ title }}</div>
+	<div class="card-body">
+		{{ form_errors(form) }}
+		{{ form_row(form.email) }}
+		{{ form_row(form.roles) }}
+	</div>
+	<div class="card-footer d-flex justify-content-between">
+		<a href="{{ path("admin_category_manage") }}" class="btn btn-secondary">Retour</a>
+		<button class="btn btn-primary">{{ action }}</button>
+	</div>
+</div>
+{{ form_end(form) }}

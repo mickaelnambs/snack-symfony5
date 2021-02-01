@@ -1,0 +1,9 @@
+{% extends "back_office/base.html.twig" %}
+
+{% block body %}
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8 col-lg-6 col-xl-4">
+            {% include 'back_office/item/_form.html.twig' with { form: form, title: "Ajouter un nouveau item", action: "Créer" } %}
+        </div>
+    </div>
+{% endblock %}

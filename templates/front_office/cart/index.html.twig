@@ -1,0 +1,86 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Votre panier
+{% endblock %}
+
+{% block body %}
+	<h1>Votre panier</h1>
+
+	{% if products_cart | length > 0 %}
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th></th>
+					<th>Produit</th>
+					<th>Categorie</th>
+					<th>Prix</th>
+					<th>Quantité</th>
+					<th>Total</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for product in products_cart %}
+					<tr>
+						<td>
+							{% for media in product.item.medias %}
+								<img src="{{ asset(media.path) }}" alt="image" style="width: 40px; height: 40px;">
+							{% endfor %}
+						</td>
+						<td>
+							{{ product.item.name }}
+						</td>
+						<td>
+							{{ product.item.category.title}}
+						</td>
+						<td>{{ product.item.price }}
+							Ar</td>
+						<td>
+							<a href="{{ path("cart_increment", {'id': product.item.id}) }}?returnToCart=true" class="btn btn-sm btn-primary">
+								<i class="fas fa-plus"></i>
+							</a>
+							{{ product.quantity }}
+							<a href="{{ path("cart_decrement", {'id': product.item.id}) }}" class="btn btn-sm btn-primary">
+								<i class="fas fa-minus"></i>
+							</a>
+						</td>
+						<td>{{ product.total }}
+							Ar</td>
+						<td>
+							<a href="{{ path("cart_delete", {'id': product.item.id}) }}" class="btn btn-sm btn-danger">
+								<i class="fas fa-trash"></i>
+							</a>
+						</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+			<tfoot>
+				<tr>
+					<td colspan="5">Total :
+					</td>
+					<td colspan="2">{{ total }}
+						Ar</td>
+				</tr>
+			</tfoot>
+		</table>
+		<hr>
+
+		{% if is_granted("ROLE_USER") %}
+			<h2>Confirmez votre commande en remplissant ce formulaire</h2>
+			{{ form_start(confirmationForm, {'action': path('purchase_confirm')}) }}
+
+			{{ form_widget(confirmationForm) }}
+
+			<button type="submit" class="btn btn-success mb-4">Je confirme !</button>
+
+			{{ form_end(confirmationForm) }}
+		{% else %}
+			<h2>Vous devez être connecté pour confirmer cette commande</h2>
+			<a href="{{ path('app_login') }}" class="btn btn-success">Connexion</a>
+			ou
+			<a href="{{ path("app_register") }}">créez un compte</a>
+		{% endif %}
+	{% else %}
+		<h2>Le panier est vide !</h2>
+	{% endif %}
+{% endblock %}

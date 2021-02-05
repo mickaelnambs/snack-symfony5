@@ -29,7 +29,7 @@
                 <div class="col-md-3 mb-4 text-center">\
                     <div class="card-group">\
                         <div class="card">\
-                        <a href={{ url }} ><img src="{{ media }}" class="card-img-top"></a>\
+                            <img src="{{ media }}" class="card-img-top">\
                             <div class="card-body">\
                                 <h5 class="card=title">\
                                     <a href="{{ url }} ">{{ name }} </a>\

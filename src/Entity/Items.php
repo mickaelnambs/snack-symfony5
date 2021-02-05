@@ -176,7 +176,8 @@ class Items
 
     public function getMediaPath()
     {
-        foreach ($this->medias as $media) {
+        foreach ($this->medias as $media)
+        {
             return $media->getPath();
         }
     }

@@ -90,6 +90,7 @@ class ItemController extends BaseController
                 'description' => htmlspecialchars($item->getDescription(), ENT_COMPAT | ENT_HTML5),
                 'price' => htmlspecialchars($item->getPrice(), ENT_COMPAT | ENT_HTML5),
                 'date' => $item->getCreatedAt(),
+                'media' => $item->getMediaPath(),
                 'url' => $this->generateUrl('item_show', ['slug' => $item->getSlug(), 'id' => $item->getId()]),
             ];
         }

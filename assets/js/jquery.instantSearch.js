@@ -36,7 +36,7 @@
                                 <p class="card-text">{{ description }}</p>\
                             </div>\
                             <div class="card-footer">\
-                                <b class="text-muted">{{ price }} </b>\
+                                <b class="text-muted">{{ price }} Ar </b>\
                             </div>\
                         </div>\
                     </div>\

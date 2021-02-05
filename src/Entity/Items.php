@@ -174,6 +174,13 @@ class Items
         return $this->medias;
     }
 
+    public function getMediaPath()
+    {
+        foreach ($this->medias as $media) {
+            return $media->getPath();
+        }
+    }
+
     public function addMedia(Medias $media): self
     {
         if (!$this->medias->contains($media)) {

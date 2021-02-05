@@ -23,11 +23,13 @@
         minQueryLength: 2,
         limit: 10,
         delay: 500,
-        noResultsMessage: 'Aucun résultat ...',
+        noResultsMessage: 'No results found',
         itemTemplate: '\
+            <div class="row">\
                 <div class="col-md-3 mb-4 text-center">\
                     <div class="card-group">\
                         <div class="card">\
+                        <a href={{ url }} ><img src="{{ media }}" class="card-img-top"></a>\
                             <div class="card-body">\
                                 <h5 class="card=title">\
                                     <a href="{{ url }} ">{{ name }} </a>\
@@ -35,12 +37,13 @@
                                 <p class="card-text">{{ description }}</p>\
                             </div>\
                             <div class="card-footer">\
-                                <b class="text-muted">{{ price }} </b>\
+                                <b class="text-muted">{{ price }} Ar </b>\
                             </div>\
                         </div>\
                     </div>\
-                </div>'
-,
+                </div>\
+            </div>'
+        ,       
     };
 
     InstantSearch.prototype.debounce = function () {

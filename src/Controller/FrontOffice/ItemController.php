@@ -2,9 +2,10 @@
 
 namespace App\Controller\FrontOffice;
 
-use App\Controller\BaseController;
 use App\Entity\Items;
+use App\Controller\BaseController;
 use App\Repository\ItemsRepository;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -63,5 +64,36 @@ class ItemController extends BaseController
         return $this->render('front_office/item/show.html.twig', [
             'item' => $item
         ]);
+    }
+
+    /**
+     * @Route("/search", name="item_search", methods={"GET"})
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function search(Request $request): Response
+    {
+        $query = $request->query->get('q', '');
+        $limit = $request->query->get('l', 10);
+
+        if (!$request->isXmlHttpRequest()) {
+            return $this->render('front_office/item/search.html.twig', ['query' => $query]);
+        }
+
+        $foundItems = $this->itemRepository->findBySearchQuery($query, $limit);
+
+        $results = [];
+        foreach ($foundItems as $item) {
+            $results[] = [
+                'name' => htmlspecialchars($item->getName(), ENT_COMPAT | ENT_HTML5),
+                'description' => htmlspecialchars($item->getDescription(), ENT_COMPAT | ENT_HTML5),
+                'price' => htmlspecialchars($item->getPrice(), ENT_COMPAT | ENT_HTML5),
+                'date' => $item->getCreatedAt(),
+                'url' => $this->generateUrl('item_show', ['slug' => $item->getSlug(), 'id' => $item->getId()]),
+            ];
+        }
+
+        return $this->json($results);
     }
 }

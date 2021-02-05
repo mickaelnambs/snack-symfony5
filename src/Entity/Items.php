@@ -15,6 +15,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Items
 {
+    public const NUM_ITEMS = 10;
+    
     /**
      * @ORM\Id
      * @ORM\GeneratedValue

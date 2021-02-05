@@ -3,6 +3,7 @@ import $ from 'jquery';
 import 'popper.js';
 import 'bootstrap';
 import '../js/cartAdd';
+import '../js/search';
 
 
 $("body").on("click", ".collection-item-delete", e => {

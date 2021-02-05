@@ -21,6 +21,12 @@
 						Menus
 					</a>
 				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="{{ path("item_search") }}">
+						<i class="fa fa-search"></i>
+						Chercher
+					</a>
+				</li>
 			</ul>
 			<ul class="navbar-nav ml-auto">
 				{% if is_granted("ROLE_USER") %}

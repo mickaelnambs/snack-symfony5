@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Items;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use function Symfony\Component\String\u;
 
 /**
  * @method Items|null find($id, $lockMode = null, $lockVersion = null)
@@ -17,6 +18,50 @@ class ItemsRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Items::class);
+    }
+
+    /**
+     * @param string $query
+     * @param integer $limit
+     * 
+     * @return array
+     */
+    public function findBySearchQuery(string $query, int $limit = Items::NUM_ITEMS): array
+    {
+        $searchTerms = $this->extractSearchTerms($query);
+
+        if (0 === \count($searchTerms)) {
+            return [];
+        }
+
+        $queryBuilder = $this->createQueryBuilder('i');
+
+        foreach ($searchTerms as $key => $term) {
+            $queryBuilder
+                ->orWhere('i.name LIKE :t_'.$key)
+                ->setParameter('t_'.$key, '%'.$term.'%')
+            ;
+        }
+
+        return $queryBuilder
+            ->orderBy('i.createdAt', 'DESC')
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * Transforms the search string into an array of search terms.
+     */
+    private function extractSearchTerms(string $searchQuery): array
+    {
+        $searchQuery = u($searchQuery)->replaceMatches('/[[:space:]]+/', ' ')->trim();
+        $terms = array_unique($searchQuery->split(' '));
+
+        // ignore the search terms that are too short
+        return array_filter($terms, function ($term) {
+            return 2 <= $term->length();
+        });
     }
 
     // /**

@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+{% block title %} Page de recherche {% endblock %}
+{% block body %}
+        <form action="{{ path('item_search') }}" method="get">
+            <div class="form-group">
+                <input name="q"
+                    class="form-control search-field"
+                    placeholder="Rechercher ... "
+                    autocomplete="off"
+                    value="{{ query }}"
+                    autofocus
+                >
+            </div>
+        </form>
+        <div class="row">
+            <div id="results">
+            </div>
+        </div>
+{% endblock %}
+{% block javascripts %}
+	{{ parent() }}
+{% endblock %}
+
